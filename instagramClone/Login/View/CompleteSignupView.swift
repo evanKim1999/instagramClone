@@ -9,7 +9,10 @@ import SwiftUI
 
 struct CompleteSignupView: View {
     @Environment(\.dismiss) var dismiss //뒤로가기를 위한 환경변수
+    @Environment(SignupViewModel.self) var signupViewModel
     var body: some View {
+        // 뷰모델에 내용을 변경하려면 @Bindable로 재선언 필요
+        @Bindable var signupViewModel = signupViewModel
         ZStack {
             GradientBackgroundView()
             VStack {
@@ -31,14 +34,16 @@ struct CompleteSignupView: View {
                             .frame(width: 185, height: 1852)
                     }
                 
-                Text("에반님, Instagrame에 오신 것을 환영합니다")
+                Text("\(signupViewModel.username)님, Instagrame에 오신 것을 환영합니다")
                     .font(.title)
                     .padding(.top, 30)
                     .padding(.horizontal)
                 Spacer()
 
                 BlueButtonView {
-                    print("complete")
+                    Task {
+                       await signupViewModel.createUser()
+                    }
                 } label: {
                     Text("complete")
                 }

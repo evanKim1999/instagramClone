@@ -6,10 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ContentView: View {
+    @State var signUpViewModel = SignupViewModel()
+    
     var body: some View {
-        MainTapView()
+        if AuthManager.shared.currentUser != nil {
+            MainTapView()
+        } else {
+            LoginView()
+                .environment(signUpViewModel) // 다음뷰들이 해당 뷰모델을 선택적으로 사용
+        }
     }
 }
 

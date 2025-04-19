@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State var viewModel = LoginViewModel()
     var body: some View {
         NavigationStack {
             // 그라데이션 효과
@@ -21,14 +22,16 @@ struct LoginView: View {
                     Spacer()
                     
                     VStack(spacing: 20) {
-                        TextField("이메일주소", text: .constant(""))
+                        TextField("이메일주소", text: $viewModel.email)
                             .modifier(InstagramTextFieldModifier()) // modifier refectoring
                         
-                        SecureField("비밀번호", text: .constant(""))
+                        SecureField("비밀번호", text: $viewModel.password)
                             .modifier(InstagramTextFieldModifier()) // modifier refectoring
                         
                         BlueButtonView {
-                            print("로그인 되었습니다!")
+                            Task {
+                                await viewModel.signin()
+                            }
                         } label: {
                             Text("로그인")
                         }

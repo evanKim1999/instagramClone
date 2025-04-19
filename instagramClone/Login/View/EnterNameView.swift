@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct EnterNameView: View {
+    @Environment(SignupViewModel.self) var signupViewModel
     var body: some View {
+        // 뷰모델에 내용을 변경하려면 @Bindable로 재선언 필요
+        @Bindable var signupViewModel = signupViewModel
         SignupBackgroundView {
             VStack {
                 Text("이름 입력")
@@ -18,8 +21,8 @@ struct EnterNameView: View {
                     .padding(.horizontal)
                     .padding(.bottom, 5)
                 
-                TextField("성명", text: .constant(""))
-                    .modifier(InstagramTextFieldModifier()) 
+                TextField("성명", text: $signupViewModel.name)
+                    .modifier(InstagramTextFieldModifier())
                 
                 NavigationLink {
                     EnterUsernameView()

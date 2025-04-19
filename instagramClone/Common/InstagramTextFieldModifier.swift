@@ -7,12 +7,18 @@
 
 import SwiftUI
 
-struct InstagramTextFieldModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct InstagramTextFieldModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .textInputAutocapitalization(.never) // 첫번째 글자 소문자로
+            .padding(12)
+            .background(.white)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.gray, lineWidth: 1)
+            }
+            .padding(.horizontal)
     }
 }
 
-#Preview {
-    InstagramTextFieldModifier()
-}

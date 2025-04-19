@@ -7,12 +7,29 @@
 
 import SwiftUI
 
-struct SignupBackgroundView: View {
+struct SignupBackgroundView<Content: View>: View {
+    let content: Content
+    @Environment(\.dismiss) var dismiss //뒤로가기를 위한 환경변수
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            GradientBackgroundView()
+        content
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .tint(.black)
+                }
+            }
+        }
     }
 }
 
-#Preview {
-    SignupBackgroundView()
-}
