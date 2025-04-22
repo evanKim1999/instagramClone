@@ -13,12 +13,12 @@ struct MainTapView: View {
     
     var body: some View {
         TabView(selection: $tabIndex) {
-            Text("Feed")
+            FeedView()
                 .tabItem {
                     Image(systemName: "house")
                 }
                 .tag(0)
-            Text("Search")
+            SearchView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                 }
